@@ -1,0 +1,22 @@
+services:
+  redis:
+    image: redis:7
+  cliapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.cliapp
+    user: "0"
+    environment:
+      REDIS_PORT: "6379"
+      REDIS_HOST: redis
+
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.webapp
+    user: "0"
+    environment:
+      REDIS_PORT: "6379"
+      REDIS_HOST: redis
+    ports:
+      - "8080:80"
